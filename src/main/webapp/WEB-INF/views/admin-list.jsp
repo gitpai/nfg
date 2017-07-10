@@ -41,8 +41,9 @@
 				<th width="150">用户名</th>
 				<th width="90">角色</th>			
 				<th width="130">加入时间</th>
-				<th width="100">是否借伞</th>
-				<th width="100">是否授权</th>
+				<th width="130">用户设备详情</th>
+			
+			
 				
 			</tr>
 		</thead>
@@ -59,17 +60,13 @@
 					<c_rt:otherwise><td>普通用户</td></c_rt:otherwise>
 				</c_rt:choose>			
 				<td>${user.time}</td>
-				<c_rt:choose>
+			<%-- 	<c_rt:choose>
 					<c_rt:when test="${user.borrowSta}"><td class="td-status"><span class="label label-success radius">已借伞</span></td></c_rt:when>
 					<c_rt:otherwise><td class="td-status"><span class="label radius">未借伞</span></td></c_rt:otherwise>
-				</c_rt:choose>	
-			
-				
-				<c_rt:choose>
-					<c_rt:when test="${user.userAuth}"><td class="td-status"><span class="label label-success radius">已授权</span></td></c_rt:when>
-					<c_rt:otherwise><td class="td-status"><span class="label radius">未授权</span></td></c_rt:otherwise>
-				</c_rt:choose>	
-				
+				</c_rt:choose>	 --%>					
+			<td><a  href="javascript:;" onclick="umbrella_list('继电器状态','umbrella-list','1','800','520','91cee0dd9793310ac4cd1ddc133a0035')"  style="text-decoration:none">				
+			点击查看详情</a>
+			</td>					
 			</tr>	
 		</c_rt:forEach>
 		</tbody>
@@ -94,6 +91,10 @@
 	w		弹出层宽度（缺省调默认值）
 	h		弹出层高度（缺省调默认值）
 */
+
+function umbrella_list(title,url,id,w,h,uuid){
+	layer_show(title,url+'?id='+uuid,w,h);
+}
 /*管理员-增加*/
 function admin_add(title,url,w,h){
 	layer_show(title,url,w,h);

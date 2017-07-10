@@ -106,6 +106,7 @@ function addIframe(cur){
 	}
 	return false;
 }
+
 $(".layout-main-tab").on('click', 'a', function(e) {
 	if($(this).attr("id")=="list"){
 		$(".layout-main-body").empty();
@@ -120,6 +121,17 @@ $(".layout-main-tab").on('click', 'a', function(e) {
 });
 
 
+$(".iot").on('click', 'a', function(e) {
+
+	
+	//if($(this).attr("id")=="list"){
+		$(".layout-main-body").empty();	
+		var iframe = "<iframe class='body-iframe' name='iframe' width='100%' height='99%' src='iot-add' frameborder='0' data-id='iot-add' seamless></iframe>";	
+		$(".layout-main-body").append(iframe);
+		alert("test")
+	//}
+	
+});
 /*添加tab*/
 function addTab(cur) {
 	var prev_all = tabWidth($(cur).prevAll()),
@@ -355,7 +367,7 @@ $(document).on("click",".layout-side-arrow",function(){
 		$(".layout-footer").removeClass("full-page");
 		$(this).removeClass("close");
 		$(".layout-side-arrow-icon").removeClass("close");
-		alert("sssss");
+	
 	}else{
 		$(".layout-side").addClass("close");
 		$(".layout-main").addClass("full-page");
@@ -392,8 +404,7 @@ $(".dropdown-skin li a").click(function(){
 	var v = $(this).attr("data-val");
 	var hrefStr=$("#layout-skin").attr("href");
 	var hrefRes=hrefStr.substring(0,hrefStr.lastIndexOf('skin/'))+'skin/'+v+'/skin.css';
-	$(window.frames.document).contents().find("#layout-skin").attr("href",hrefRes);
-	
+	$(window.frames.document).contents().find("#layout-skin").attr("href",hrefRes);	
 	setCookie("scclui-skin", v);
 });
 
@@ -440,8 +451,8 @@ $(function(){
 	var menu = [{"id":"1","name":"主菜单","parentId":"0","url":"","icon":"","order":"1","isHeader":"1","childMenus":[
 					{"id":"3","name":"设备管理","parentId":"1","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
 						{"id":"4","name":"首页","parentId":"3","url":"firstPage","icon":"","order":"1","isHeader":"0","childMenus":""},
-						{"id":"5","name":"所有设备","parentId":"3","url":"device-list","icon":"","order":"1","isHeader":"0","childMenus":""},
-						{"id":"6","name":"添加设备","parentId":"3","url":"device-add","icon":"","order":"1","isHeader":"0","childMenus":""}
+						{"id":"5","name":"所有设备","parentId":"3","url":"iot-list","icon":"","order":"1","isHeader":"0","childMenus":""},
+						{"id":"6","name":"添加设备","parentId":"3","url":"iot-add","icon":"","order":"1","isHeader":"0","childMenus":""}
 					]},
 					{"id":"7","name":"用户管理","parentId":"1","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
 						{"id":"8","name":"用户列表","parentId":"7","url":"admin-list","icon":"","order":"1","isHeader":"0","childMenus":""},
@@ -451,7 +462,7 @@ $(function(){
 				]},
 				{"id":"2","name":"系统设置","parentId":"0","url":"","icon":"","order":"2","isHeader":"1","childMenus":[
 					{"id":"11","name":"API文档","parentId":"2","url":"","icon":"","order":"1","isHeader":"0","childMenus":[
-					{"id":"12","name":"SU开发协议","parentId":"2","url":"https://www.showdoc.cc/1630569?page_id=14990430","icon":"","order":"1","isHeader":"0","childMenus":""}
+					{"id":"12","name":"云平台开发协议","parentId":"2","url":"https://www.showdoc.cc/home/item/show/item_id/1634946","icon":"","order":"1","isHeader":"0","childMenus":""}
 					]},
 					{"id":"13","name":"关于我们","parentId":"2","url":"","icon":"","order":"1","isHeader":"0","childMenus":[
 						{"id":"14","name":"S&U","parentId":"12","url":"","icon":"","order":"1","isHeader":"0","childMenus":""},

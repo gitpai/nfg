@@ -3,9 +3,9 @@ package com.su.controller;
 import java.util.Date;
 import java.util.List;
 
-import com.su.dao.MomentDao;
-import com.su.dao.impl.MomentDaoImpl;
-import com.su.models.Moments;
+import com.flower.dao.MomentDao;
+import com.flower.dao.impl.MomentDaoImpl;
+import com.flower.models.Moments;
 
 public class MomentTest {
 	public static void main(String[] args) {

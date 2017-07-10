@@ -2,9 +2,9 @@ package com.su.controller;
 
 import java.util.Date;
 
-import com.su.dao.UserBarHisDao;
-import com.su.dao.impl.UserBarHisDaoImpl;
-import com.su.models.UserBarHistory;
+import com.flower.dao.UserBarHisDao;
+import com.flower.dao.impl.UserBarHisDaoImpl;
+import com.flower.models.UserBarHistory;
 
 public class HisToryTest {
 	public static void main(String[] args) {

@@ -1,7 +1,7 @@
 package com.su.controller;
 
-import com.su.util.BitUtils;
-import com.su.util.Md5_1;
+import com.flower.util.BitUtils;
+import com.flower.util.Md5_1;
 
 public class Test {
 	public static void main(String[] args) {

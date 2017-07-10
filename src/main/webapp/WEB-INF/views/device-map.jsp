@@ -1,4 +1,4 @@
-<%@page import="com.su.models.Umbrella"%>
+<%@page import="com.flower.models.Umbrella"%>
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
@@ -118,7 +118,7 @@
         	//alert(desc);      
          //map.centerAndZoom(point, 19); 
          var marker=new BMap.Marker(point);
-         marker.setLabel(new BMap.Label("伞架:"+(id),{offset:new BMap.Size(20,-10)}));	 
+         marker.setLabel(new BMap.Label("物联网设备:"+(id),{offset:new BMap.Size(20,-10)}));	 
          map.addOverlay(marker);   
 		 //若要给标注添加信息框，则继续下面的代码：
 		//var infoWindow = new BMap.InfoWindow("普通标注");

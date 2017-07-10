@@ -25,21 +25,21 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>雨伞列表</title>
+<title>继电器列表</title>
 </head>
 <body>
 
   <c_rt:choose>
   <c_rt:when test="${status}">
-	<span class="r">共有雨伞：<strong>${umbrellaNum}</strong>套</span> </div>
+	<span class="r">共有继电器设备：<strong>${umbrellaNum}</strong></span> </div>
 	<table class="table table-border table-bordered table-bg">
 		<thead>
 			<tr>
-			<th align="center" scope="col" colspan="9" >伞架ID：${uuid}</th>
+			<th align="center" scope="col" colspan="9" >设备UUID：${uuid}</th>
 			</tr>
 			<tr class="text-c">
-			<th width="40">雨伞序号</th>
-			<th width="150">雨伞借还状态</th>
+			<th width="40">继电器序号</th>
+			<th width="150">继电器状态</th>
 			<th width="90">操作</th>
 			</tr>
 		</thead>
@@ -49,20 +49,20 @@
 		<td >${umbrellaSta.key}</td>
 		
 		<c_rt:choose>
-					<c_rt:when test="${umbrellaSta.value}">
-					<td class="td-status"><span umbrella-sta="true"   class="label label-success radius" >未借出</span></td></c_rt:when>
+					<c_rt:when test="${umbrellaSta.value}"><!-- value =true 代表状态关闭 可以开启 -->
+					<td class="td-status"><span umbrella-sta="true"   class="label radius"  >关闭</span></td></c_rt:when>
 					<c_rt:otherwise>
-					<td class="td-status"><span umbrella-sta="false"  class="label radius" >借出</span></td></c_rt:otherwise>
+					<td class="td-status"><span umbrella-sta="false"  class="label label-success radius" >开启</span></td></c_rt:otherwise>
 		</c_rt:choose>
 				
 		<td>
 			
 			<c_rt:choose>
 					<c_rt:when test="${umbrellaSta.value}">
-					<button align="center" type="button" class="btn btn-success borrow" oper="borrow" key="${umbrellaSta.key}" >借</button></c_rt:when>
+					<button align="center" type="button" class="btn btn-success open" oper="open" key="${umbrellaSta.key}" >开启</button></c_rt:when>
 					<c_rt:otherwise>
 					 &nbsp;&nbsp; 
-				    <button align="center" type="button" class="btn btn-danger reback"  oper="reback"  key="${umbrellaSta.key}">还</button></c_rt:otherwise>	
+				    <button align="center" type="button" class="btn btn-danger closer"  oper="close"  key="${umbrellaSta.key}">关闭</button></c_rt:otherwise>	
 		</c_rt:choose>		
 		</td>		
 		</tr>	
@@ -86,14 +86,14 @@
  * 借伞
  */
 
-jQuery(document).on('click', ".borrow", function() {
+jQuery(document).on('click', ".open", function() {
 	
    
 	var cur = $(this);	
 	
 	
 	 if(cur.attr("umbrella-sta")=="false"){
-		layer.msg("伞已被借走");
+		layer.msg("继电器已开启");
 		return;
 	}
 	/*  var tr1 = this.parentNode.parentNode;  
@@ -115,13 +115,13 @@ jQuery(document).on('click', ".borrow", function() {
    	   		
    			if(json.status==1){ 			
    				cur.attr("umbrella-sta",false)			
-   			 	layer.msg("借伞成功");	
-   				var td = cur.parents("tr").find(".td-status");
-   				td.find("span").text("已借出");
+   			 	layer.msg("开启成功");	
+   				//var td = cur.parents("tr").find(".td-status");
+   				//td.find("span").text("已借出");
    			 	location.reload();
    				
    			}else{
-   			 	layer.msg("借伞失败");
+   			 	layer.msg("开启继电器失败");
    			}
    		} 
    	});
@@ -129,11 +129,11 @@ jQuery(document).on('click', ".borrow", function() {
 /*
  * 还伞
  */
-jQuery(document).on('click', ".reback", function() {
+jQuery(document).on('click', ".closer", function() {
 	
 	var cur = $(this);
 	if(cur.attr("umbrella-sta")=="true"){
-		layer.msg("该伞位已经有伞，清选择其它伞位");
+		layer.msg("继电器已关闭");
 		return;
 	}	
 	
@@ -151,13 +151,13 @@ jQuery(document).on('click', ".reback", function() {
    			if(json.status==1){
    				cur.attr("umbrella-sta",true)			
    			 	
-   				var td = cur.parents("tr").find(".td-status");
-   				td.find("span").text("未借出");
+   				//var td = cur.parents("tr").find(".td-status");
+   				//td.find("span").text("未借出");
    			  				
-   			 	layer.msg("还伞成功");	
+   			 	layer.msg("关闭成功");	
    			    location.reload();
    			}else{
-   			 	layer.msg("还伞失败");
+   			 	layer.msg("关闭失败");
    			}
    		} 
    	});

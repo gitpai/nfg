@@ -1,6 +1,9 @@
 eclipse.preferences.version=1
-encoding//src/main/java/com/su/util/JdbcUtil.java=UTF-8
+encoding//src/main/java/com/flower/util/Base64Coder.java=UTF-8
+encoding//src/main/java/com/flower/util/JdbcUtil.java=UTF-8
 encoding//src/main/webapp/WEB-INF/views=UTF-8
-encoding//src/main/webapp/WEB-INF/views/device-add.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/device-map.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/iot-add.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/login.jsp=UTF-8
+encoding//src/main/webapp/resources/css/sccl.css=UTF-8
 encoding//src/test/java/com/su/controller/Test.java=UTF-8
