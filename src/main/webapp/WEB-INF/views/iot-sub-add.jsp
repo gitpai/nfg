@@ -13,16 +13,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
+     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
     <link rel="icon" type="image/png" href="resources/assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="resources/assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+   
     <link rel="stylesheet" href="resources/assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="resources/assets/css/amazeui.datatables.min.css"/>
     <link rel="stylesheet" href="resources/assets/css/app.css">
     
     <script src="resources/assets/js/jquery.min.js"></script>
-    <script type="text/javascript"
-            src="http://api.map.baidu.com/api?v=2.0&ak=8579ee3b967425dc22f0c3953825ec95"></script>
+   
 
     <!--<script src="http://api.map.baidu.com/getscript?v=2.0&ak=8579ee3b967425dc22f0c3953825ec95&services=&t=20170506025723"></script>-->
 </head>
@@ -62,8 +62,8 @@
         </div>
     </div>
 </div>
-<script src="resources/assets/js/amazeui.min.js"></script>
-<script src="resources/assets/js/app.js"></script>
+<!-- <script src="resources/assets/js/amazeui.min.js"></script>
+<script src="resources/assets/js/app.js"></script> -->
 <script>
 
 		$(function () {
@@ -85,8 +85,6 @@
 			　　});
 		
 			});
-
-
 
 </script>
 

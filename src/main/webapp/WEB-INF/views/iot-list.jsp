@@ -62,12 +62,16 @@
 
   <c_rt:choose>
   <c_rt:when test="${status}">
-    
-   <span class="r">设备：<strong>${device}</strong> 套</span> </div>
+  <div align="center">
+    <button  class="btn btn-success" ><a  href="firstPage" style="text-decoration:none;color:white" >首页</a></button>
+ 
+  </div>
+   </br>
 	<table class="table table-border table-bordered table-bg">
 		<thead>
 			<tr>
-				<th scope="col" colspan="9">设备列表</th>
+				<th scope="col" colspan="9">设备列表 <span class="r">设备：<strong>${deviceNum}</strong> 套</span></th>
+				
 			</tr>
 			<tr class="text-c">
 				
@@ -90,7 +94,7 @@
 				${iotDevices.serial}</a></td>
 				<%-- <td>${iotDevices.time}</td> --%>
 				<c_rt:choose>
-					<c_rt:when test="${umbrella.status}"><td class="td-status"><span class="label label-success radius">在线</span><a href="javascript:void(0)" class="updateState" data-uuid="${umbrella.device_uuid}">&nbsp;&nbsp;刷新</a></td></c_rt:when>
+					<c_rt:when test="${iotDevices.status}"><td class="td-status"><span class="label label-success radius">在线</span><a href="javascript:void(0)" onclick="myrefresh()" class="updateState" data-uuid="${umbrella.device_uuid}">&nbsp;&nbsp;刷新</a></td></c_rt:when>
 					<c_rt:otherwise><td class="td-status"><span class="label radius">离线</span><a href="javascript:void(0)" class="updateState" data-uuid="" style="background-color: #33AECC;border-radius:3px;color:#FFF;text-decoration:none;display:inline-block;text-align:center;padding: 2px 4px;font-size: 11.844px;line-height: 14px;margin-left:3px;vertical-align:middle">刷新</a></td></c_rt:otherwise>
 				</c_rt:choose>	
 				<%-- <td>				
@@ -98,7 +102,7 @@
 				点击查看详情</a></td> --%>			
 				<td class="td-manage">
 				
-				 <a title="删除" href="javascript:;" umbrella-uuid="${umbrella.device_uuid}" class="ml-5 delete"" style="text-decoration:none">
+				 <a title="删除" href="javascript:;" device-uuid="${iotDevices.serial}" class="ml-5 delete"" style="text-decoration:none">
 				 <i class="Hui-iconfont">&#xe6e2;</i>
 				 </a></td>
 			</tr>
@@ -152,23 +156,23 @@ jQuery(document).on('click', ".delete", function() {
      alert(tr1.cells[1].innerText);   */  
 	var data={  		
    		
-   		uuid:cur.attr("umbrella-uuid"),
+   		uuid:cur.attr("device-uuid"),
    			
    	 }
     
    	 jQuery.ajax({
    		 type: 'POST',
-   		 url: "delete-dev",
+   		 url: "delete-iot",
    		 data:data,
    		 dataType: 'json',
    		 success: function(json) { 
    			 layer.closeAll('dialog');
    			 
-   			if(json.status==0){ 			  			
-   			 	location.reload();
+   			if(json.status==1){ 			  			
+   				window.location.reload(); 
    				
    			}else{
-   			 	layer.msg("借伞失败");
+   			 	layer.msg("删除失败");
    			}
    		} 
    
@@ -192,7 +196,8 @@ function admin_stop(obj,id){
 		layer.msg('已停用!',{icon: 5,time:1000});
 	});
 }
-
+function myrefresh() 
+{  window.location.reload(); }
 /*管理员-启用*/
 function admin_start(obj,id){
 	layer.confirm('确认要启用吗？',function(index){

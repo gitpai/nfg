@@ -11,9 +11,10 @@ import org.hibernate.Transaction;
 
 import com.flower.dao.UserDao;
 import com.flower.models.User;
+import com.flower.models.UserVerifyCode;
 import com.flower.util.JdbcUtil;
-import com.flower.util.Md5_1;
 import com.flower.util.MySessionFactory;
+
 
 
 
@@ -23,7 +24,7 @@ import com.flower.util.MySessionFactory;
  */
 public class UserDaoImpl implements UserDao {
 
-	@Override
+	
 	public void addUser(User user) {		
 		
 		Session session = MySessionFactory.getInstance().openSession();
@@ -35,12 +36,11 @@ public class UserDaoImpl implements UserDao {
 		} catch (RuntimeException e) {
 			tx.rollback();
 			throw e;
-		} finally {
-			
+		} finally {			
 			session.close();
 					}				
 	}
-	@Override
+	
 	public User findByName(String userName) {
 	Session session=MySessionFactory.getInstance().openSession();	
 	
@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
 		}
 
 	}
-	@Override
+
 	public void delete(String userName) {
 		// TODO Auto-generated method stub
 		Connection conn=null;
@@ -84,7 +84,7 @@ public class UserDaoImpl implements UserDao {
 			JdbcUtil.close(conn, stmt);
 		}
 	}
-	@Override
+
 	public List<User> findAllUser() {
 		Session session= MySessionFactory.getInstance().openSession();
 		try{
@@ -98,7 +98,7 @@ public class UserDaoImpl implements UserDao {
 		}
 		
 	}
-	@Override
+
 	public List<User> findUserUnAuth() {
 		Session session= MySessionFactory.getInstance().openSession();
 		try{
@@ -111,6 +111,41 @@ public class UserDaoImpl implements UserDao {
 			session.close();	
 		}
 	}
+
+	public void addUserRegCode(UserVerifyCode userVerifyCode) {
+		// TODO Auto-generated method stub
+		Session session=MySessionFactory.getInstance().openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			session.saveOrUpdate(userVerifyCode);
+			tx.commit();
+		} catch (RuntimeException e) {
+			tx.rollback();
+			throw e;
+		} finally {
+			
+			session.close();
+					}	
+	}
+	
+	public String getUserRegCode(String phoneNum) {
+		// TODO Auto-generated method stub
+		 Session session=MySessionFactory.getInstance().openSession();
+		 try{		 
+			 String hql="from UserVerifyCode where user_name=:phoneNum";	
+			 Query query=  session.createQuery(hql);
+			 query.setString("phoneNum", phoneNum);
+			 List<UserVerifyCode> users=  query.list();
+			 UserVerifyCode userVerifyCode=	users.get(0);		
+			 return userVerifyCode.getVerfyCode(); 
+		 }finally{
+			 session.close();
+		 }
+		 
+	}
+	
+
+
 
 	
 

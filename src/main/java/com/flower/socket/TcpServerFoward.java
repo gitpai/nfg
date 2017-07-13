@@ -18,6 +18,7 @@ import com.flower.dao.IotDao;
 import com.flower.dao.UmbrellaDao;
 import com.flower.dao.impl.IotDaoImpl;
 import com.flower.dao.impl.UmbrellaDaoImpl;
+import com.flower.models.IotDevice;
 import com.flower.models.IotSubDevice;
 import com.flower.models.Umbrella;
 import com.mysql.fabric.xmlrpc.base.Array;
@@ -34,7 +35,7 @@ public class TcpServerFoward extends Thread {
 	private static ServerSocket serverSocket;
 	private Socket socket;
 	private static OutputStream out;
-	private static final int SERVER_PORT=8989;//端口号
+	private static final int SERVER_PORT=7777;//端口号
 	private static final int BUFFER_SIZE = 512;	
 	private boolean[] flags = new boolean[12];
 	
@@ -52,9 +53,7 @@ public class TcpServerFoward extends Thread {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
-		return serverSocket;
-		
-		
+		return serverSocket;		
 	}
 /*	public static void infoFoward(){
 		byte[] receivBuf=new byte[BUFFER_SIZE];  
@@ -77,25 +76,29 @@ public class TcpServerFoward extends Thread {
 				InputStream in = socket.getInputStream();
 				OutputStream out = socket.getOutputStream();
 				String devUuid = null;	
-				IotDao dao=new IotDaoImpl();				
-				IotSubDevice iotSubDevice =new IotSubDevice();
-				
-				UmbrellaDao umbrellaDao = new UmbrellaDaoImpl();
-				Umbrella um = null;
+				IotDao iotDao=new IotDaoImpl();				
+				IotSubDevice iotSubDevice =null;
 				while ((recvMsgSize = in.read(receivBuf)) != -1){
 					byte[] revData;
-					revData = Arrays.copyOfRange(receivBuf, 0, 19);
+					revData = Arrays.copyOfRange(receivBuf, 0, 24);
 					String recDataStr = byteToString(revData);
 					System.out.println(recDataStr);
-
-					if (receivBuf[0] == 0x01 && receivBuf[1] == 0x01 && receivBuf[2] == 0x01) {
+					
+					if (receivBuf[0] == 0x01 && receivBuf[1] == 0x01) {
 						byte[] uuid;
 						uuid = Arrays.copyOfRange(receivBuf, 3, 19);
-						devUuid = byteToString(uuid);
+						devUuid = byteToString(uuid);//uuid 获取正常					
 						byte[] umSta;
-						umSta = Arrays.copyOfRange(receivBuf, 19, 21);
-						um = umbrellaDao.findDeviceByUuid(devUuid);
-						um.setUmbrellaSta(umSta);
+						System.out.println((int)receivBuf[2]);//输出1					
+						iotSubDevice=iotDao.findSubDeviceByUuid(devUuid,(int)receivBuf[2]);
+						IotDevice iotDevice= iotDao.findIotDeviceByUuid(devUuid);
+						iotDevice.setStatus(true);
+						iotDao.addDevice(iotDevice);
+						String temprature=""+(char)(int)receivBuf[19]+(char)(int)receivBuf[20]+"."+(char)(int)receivBuf[22]+(char)(int)receivBuf[23];
+						System.out.println("温度========"+temprature);
+						System.out.println(Double.parseDouble(temprature));
+						iotSubDevice.setValue(Double.parseDouble(temprature));
+						
 						Map<String, Socket> socketMap = SocketStart.getSocketClients();
 						synchronized (socketMap) {
 							System.out.println(socketMap);
@@ -103,7 +106,7 @@ public class TcpServerFoward extends Thread {
 
 							if (!socketMap.containsKey(devUuid)) {
 								socketMap.put(devUuid, socket);
-								um.setStatus(true);
+							//	um.setStatus(true);
 								System.out.println("添加新的Socket");
 							}else 
 							{
@@ -113,16 +116,16 @@ public class TcpServerFoward extends Thread {
 									socketMap.put(devUuid, socket);
 								} 
 							}	
-							umbrellaDao.addDevice(um);
+							iotDao.addSubDevice(iotSubDevice);
 						}
 					}
 
 				}    
                 in.close();                   
                 System.out.println("我这个客户端掉线了");
-                um.setStatus(false);             
+              //  um.setStatus(false);             
                 SocketStart.remClients(devUuid);   
-                umbrellaDao.addDevice(um);  
+              //  umbrellaDao.addDevice(um);  
                 return;
                 //clientSocket.close();               
             }  

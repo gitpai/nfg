@@ -66,6 +66,7 @@
 </br>
 <div align="center"><button  class="btn btn-success" ><a  style="text-decoration:none;color:white" href="iot-sub-add?uuid=${devUuid}">添加子设备</a></button>
 <button  class="btn btn-success" ><a  style="text-decoration:none;color:white" onclick="get_uuid('当前设备uuid','iot-uuid','1','300','320','${devUuid}')">获取设备uuid</a></button>
+<button  class="btn btn-success" ><a  href="firstPage" style="text-decoration:none;color:white" >首页</a></button>
 </div>
 </br>
   
@@ -84,17 +85,18 @@
 		</thead>
 		<tbody>
 			<c_rt:forEach items="${iotSubDevices}" var="iotSubDevices">
-			<tr class="text-c">				
-				<td class="td-status-id" id="${iotSubDevices.id}">${iotSubDevices.id}</td>
+			<tr class="text-c" id="${iotSubDevices.id}">				
+				<td class="td-status-id" idser="${iotSubDevices.id}">${iotSubDevices.id}</td>
 				<td>${iotSubDevices.name}</td>
 				<%-- <td>${iotDevices.time}</td> --%>
+				<td class="td-status" >
 				<c_rt:choose>
-					<c_rt:when test="${iotSubDevices.type==0}"><td class="td-status"><span class="label label-success radius">开关</span></td><td><button class="btn btn-success begin" style="width:48px;height: 23px;font-size:10px;">开始</button></td></c_rt:when>
-					<c_rt:when test="${iotSubDevices.type==1}"><td class="td-status"><span class="label label-success radius">温度</span></td><td>${iotSubDevices.value}</td></c_rt:when>
-					<c_rt:otherwise><td class="td-status"><span class="label label-success radius">湿度</span></td><td>${iotSubDevices.value}</td></c_rt:otherwise>
+					<c_rt:when test="${iotSubDevices.type==0}"><span class="label label-success radius">开关</span></td><td><button class="btn btn-success operate" style="width:48px;height: 23px;font-size:10px;">开始</button></c_rt:when>
+					<c_rt:when test="${iotSubDevices.type==1}"><span class="label label-success radius">温度</span></td><td class="setvalue">${iotSubDevices.value}</c_rt:when>
+					<c_rt:otherwise><span class="label label-success radius">湿度</span></td><td class="setvalue">${iotSubDevices.value}</c_rt:otherwise>
 				</c_rt:choose>	
 				
-			
+			</td>
 					
 				
 				<%-- <td>				
@@ -129,11 +131,35 @@
 */
 /*管理员-增加*/
 
-/*  function myrefresh() 
- { 
- window.location.reload(); 
+  function myrefresh() 
+ {  
+	  var data={
+			devUuid:"${devUuid}",
+		} 
+	   	 jQuery.ajax({
+	   		 type: 'POST',
+	   		 url: "iot-sub-list-ajax",
+	   		 data:data,
+	   		 dataType: 'json',
+	   		 success: function(data) { 
+	   			for(var o in data){  
+	   				var id=data[o].id;
+	   				$("#"+id).find(".setvalue").html(data[o].value);
+	   		      } 
+	   			
+		   	/* 	 alert(json.id)
+		   		 var id=json.id;
+		   		 alert(id);
+		   		 $("#"+id).find(".setvalue").text("2");
+	   			 console.log(json);	  */  			
+	   		} 
+	   
+	   	});	
+	   	
+// window.location.reload(); 
  } 
- setTimeout('myrdefresh()',10000);  */
+  setInterval('myrefresh()',5000);  
+ 
 function iot_sub(title,url,id,w,h,uuid){
 	layer_show(title,url+'?uuid='+uuid,w,h);
 }
@@ -148,13 +174,13 @@ function iot_sub(title,url,id,w,h,uuid){
 		  });
 	}
 /*管理员-删除*/
-jQuery(document).on('click', ".begin", function() {	
+jQuery(document).on('click', ".operate", function() {	
 	var cur = $(this);		
 	//cur.text("哈哈哈");
 	//cur.attr("class","btn btn-success begin hhhhhhhh")
 	var data={
 			devUuid:"${devUuid}",
-	   		iotSubId:cur.parents("tr").find(".td-status-id").attr("id"),
+	   		iotSubId:cur.parents("tr").find(".td-status-id").attr("idser"),
 	   		iotSubOperate:cur.html(),
 	} 
    	 jQuery.ajax({
@@ -165,10 +191,10 @@ jQuery(document).on('click', ".begin", function() {
    		 success: function(json) { 
    			if(json.status==0){ 		//0代表当前操作为开启	  			
    				cur.text("关闭");	
-   				cur.attr("class","btn btn-danger")		
+   				cur.attr("class","btn btn-danger operate")		
    			}else if(json.status==1){   //1代表当前操作为关闭
    				cur.text("开启");	
-   				cur.attr("class","btn btn-success")
+   				cur.attr("class","btn btn-success operate")
    			}else{
    				layer.msg("操作失败");
    	   			}
@@ -177,6 +203,7 @@ jQuery(document).on('click', ".begin", function() {
    	});	
    	
 });	
+
 
 
 /*管理员-编辑*/

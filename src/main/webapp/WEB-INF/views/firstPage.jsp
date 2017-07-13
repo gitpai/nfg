@@ -25,8 +25,8 @@
   </div>
 		
   <div  class="choosePad">
-  	<a href="" style="background-color:#FFCC22; margin-right:0;"><i class="icon-font" >&#xe600;</i><br>所有设备<span>1</span>个</a>
-  	<a href="" style="background-color:#33AECC;"><i class="icon-font" >&#xe604;</i><br>添加设备</a>
+  	<a href="iot-list" style="background-color:#FFCC22; margin-right:0;"><i class="icon-font" >&#xe600;</i><br>所有设备<span>${deviceNum}</span>个</a>
+  	<a href="iot-add" style="background-color:#33AECC;"><i class="icon-font" >&#xe604;</i><br>添加设备</a>
   	<a href="" style="background-color:#666699; margin-right:0;"><i class="icon-font" >&#xe602;</i><br>使用手册</a>
   	<a href="" style="background-color:#CCCC99;"><i class="icon-font" >&#xe605;</i><br>关于我们</a>
   </div>	

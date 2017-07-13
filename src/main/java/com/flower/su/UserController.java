@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.flower.dao.IotDao;
 import com.flower.dao.UmbrellaDao;
 import com.flower.dao.UserDao;
+import com.flower.dao.impl.IotDaoImpl;
 import com.flower.dao.impl.UmbrellaDaoImpl;
 import com.flower.dao.impl.UserDaoImpl;
+import com.flower.models.IotDevice;
 import com.flower.models.NetResult;
 import com.flower.models.Umbrella;
 import com.flower.models.User;
@@ -76,27 +79,32 @@ public class UserController {
 	@RequestMapping(value = "/login", method = {RequestMethod.GET,RequestMethod.POST})
 	public String login(Locale locale, Model model,
 			@RequestParam(value="userName",required=true)  String userName,		
-			@RequestParam(value="password",required=true)  String password,
+		
 			HttpSession session,
 			HttpServletResponse response) {
 			Cookie c = new Cookie("JSESSIONID",session.getId());
-			c.setMaxAge(60*60);
+			c.setMaxAge(60*60*60);
 			response.addCookie(c);
-		System.out.println("进入了login");
-		UserDao dao=new UserDaoImpl();
-	
-		if(dao.findByName(userName)!=null){			
-			if(dao.findByName(userName).getPassword().equals(Md5_1.GetMD5Code(password))){		
+			System.out.println("进入了login");
+			UserDao dao=new UserDaoImpl();
+		if(dao.findByName(userName)!=null){	
+			IotDao iotDao=new IotDaoImpl();
+			List<IotDevice>  iotDevices=iotDao.findAllIotDevice((String)session.getAttribute("admin"));
+	        if(iotDevices!=null){
+	        	   model.addAttribute("deviceNum",iotDevices.size());  
+	        	   session.setAttribute("deviceNum", iotDevices.size());
+	        }else{
+	        	   model.addAttribute("deviceNum","0");
+	        }
 				model.addAttribute("status", true);
 			//	model.addAttribute("admin", userName);
 				session.setAttribute("admin", userName);
-				session.setAttribute("status", true);
-			}		
-										
+				session.setAttribute("status", true);	
+				
 		}else{
 			model.addAttribute("status", false);
 		}		
-	   return "login";	
+	   return "home";	
 	}
 	@RequestMapping(value = "/login-out", method = {RequestMethod.GET,RequestMethod.POST})
 	public String loginOut(Locale locale, Model model,			

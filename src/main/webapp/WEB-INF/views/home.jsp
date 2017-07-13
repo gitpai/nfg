@@ -25,12 +25,12 @@
 	<div class="layout-admin">
 		<header class="layout-header">
 			<span class="header-logo">物联网云平台</span> 
-			<a class="header-menu-btn" href="javascript:;"><i class="icon-font">&#xe600;</i></a>
+			<a class="header-menu-btn" href="javascript:;"><!-- <i class="icon-font">&#xe600;</i> --></a>
 			<ul class="header-bar">
 				<li class="header-bar-role"><a href="javascript:;">您好，超级管理员</a></li>
 				<li class="header-bar-nav">
 				
-					<a href="javascript:;">${admin}<i class="icon-font" style="margin-left:5px;">&#xe60c;</i></a>
+					<a href="javascript:;">${admin}<!-- <i class="icon-font" style="margin-left:5px;">&#xe60c;</i> --></a>
 					<ul class="header-dropdown-menu">
 						<li><a href="javascript:;">个人信息</a></li>
 						<li><a href="javascript:;">切换账户</a></li>
@@ -71,7 +71,7 @@
 			</div> -->
 			<div class="layout-main-body">
 			
-				<iframe class="body-iframe" name="iframe0" width="100%" height="100%" src="firstPage" frameborder="0" data-id="firstPage" seamless></iframe>
+				<iframe   class="body-iframe" style="height:99%;" name="iframe0" width="100%"  src="firstPage" scrolling="no" frameborder="0" data-id="firstPage" seamless></iframe>
 			</div>
 		</section>
 		
